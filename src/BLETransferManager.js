@@ -16,17 +16,9 @@ const PushSplitSize=18;
 
 class BLETransferManager {
     constructor() {
-        this.BLEPeripheralManagerEmitter = new NativeEventEmitter(BLEPeripheral);
-        this.BLECentralManagerEmitter = new NativeEventEmitter(NativeModules.BleManager);
+        this.peripheralEmitter = new NativeEventEmitter(BLEPeripheral);
+        this.centralEmitter = new NativeEventEmitter(NativeModules.BleManager);
         this.tmpWaitArr = {};
-    }
-
-    GetBLEPeripheralEmitter(){
-        return this.BLEPeripheralManagerEmitter;
-    }
-
-    GetBLECentralEmitter(){
-        return this.BLECentralManagerEmitter;
     }
 
     SetDeviceCharacteristicUUID(uuid){
