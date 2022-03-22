@@ -1,5 +1,6 @@
 import BLEStorage from './BLEStore';
 import BLETransferManager from './BLETransferManager';
+import {request, PERMISSIONS} from 'react-native-permissions';
 const Platform = require('Platform');
 
 class BLEWormhole {
