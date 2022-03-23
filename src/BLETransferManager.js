@@ -14,11 +14,24 @@ const PartFlag=0xfd;
 const MaxSendSize=20;
 const PushSplitSize=18;
 
-class BLETransferManager {
+class TransferManager {
     constructor() {
-        this.peripheralEmitter = new NativeEventEmitter(BLEPeripheral);
-        this.centralEmitter = new NativeEventEmitter(NativeModules.BleManager);
         this.tmpWaitArr = {};
+    }
+
+    CreateNativeEventEmitter(centralEmitter,peripheralEmitter){
+        if(peripheralEmitter==undefined){
+            this.peripheralEmitter = new NativeEventEmitter(BLEPeripheral);
+        }
+        else{
+            this.peripheralEmitter = peripheralEmitter;
+        }
+        if(centralEmitter==undefined){
+            this.centralEmitter = new NativeEventEmitter(NativeModules.BleManager);
+        }
+        else{
+            this.centralEmitter = centralEmitter;
+        }
     }
 
     SetDeviceCharacteristicUUID(uuid){
@@ -206,4 +219,4 @@ class BLETransferManager {
     }
 }
 
-export default BLETransferManager = new BLETransferManager();
+export default BLETransferManager = new TransferManager();

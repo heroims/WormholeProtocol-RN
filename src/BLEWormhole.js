@@ -3,13 +3,18 @@ import BLETransferManager from './BLETransferManager';
 import {request, PERMISSIONS} from 'react-native-permissions';
 const Platform = require('Platform');
 
-class BLEWormhole {
+class Wormhole {
 
     constructor() {
         this.GenerateDeviceID();
 
         this.scanning=false;
 
+        
+    }
+
+    CreateNativeEventEmitter(centralEmitter,peripheralEmitter){
+        BLETransferManager.CreateNativeEventEmitter(centralEmitter,peripheralEmitter);
         BLETransferManager.centralEmitter.addListener('BleManagerDiscoverPeripheral', (device)=>{   
             var tmpDevice={name:device.name,serviceUUIDs:device.serviceUUIDs.concat(),deviceID:device.id,connected:false}
          
@@ -34,7 +39,7 @@ class BLEWormhole {
               this.ReceiveHandler(characteristic);    
             }
     
-          })
+        });
     }
 
     CreatServer(serviceUUID,characteristicUUIDs,name = ''){
@@ -210,4 +215,4 @@ class BLEWormhole {
 
 }
 
-export default BLEWormhole = new BLEWormhole();
+export default BLEWormhole = new Wormhole();
