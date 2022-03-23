@@ -8,7 +8,7 @@
     "type": "git",
     "url": "git+https://github.com/heroims/WormholeProtocol-RN.git"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@react-native-async-storage/async-storage": "^1.16.1",
     "buffer": "^6.0.3",
     "react": "17.0.2",
