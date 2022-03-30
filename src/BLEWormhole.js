@@ -12,7 +12,7 @@ class Wormhole {
     CreateNativeEventEmitter(centralEmitter,peripheralEmitter){
         BLETransferManager.CreateNativeEventEmitter(centralEmitter,peripheralEmitter);
         BLETransferManager.centralEmitter.addListener('BleManagerDiscoverPeripheral', (device)=>{   
-            var tmpDevice={name:device.name,serviceUUIDs:device.serviceUUIDs.concat(),deviceID:device.id,connected:false}
+            var tmpDevice={name:device.name,serviceUUIDs:device.serviceUUIDs===undefined?device.serviceUUIDs:device.serviceUUIDs.concat(),deviceID:device.id,connected:false}
          
             this.DiscoverDeviceHandler(tmpDevice)
         });
@@ -113,10 +113,12 @@ class Wormhole {
         });
     }
 
-    Scan(serviceUUIDs,discoverDeviceHandler){
-        this.DiscoverDeviceHandler=discoverDeviceHandler;
+    Scan(serviceUUIDs,seconds,discoverDeviceHandler){
+        if(discoverDeviceHandler!=undefined){
+            this.DiscoverDeviceHandler=discoverDeviceHandler;
+        }
         return new Promise((fulfill, reject)=>{
-            BLETransferManager.Scan(serviceUUIDs,10,true)
+            BLETransferManager.Scan(serviceUUIDs,seconds,true)
             .then(res=>{
                 this.scanning = true;
                 fulfill(res);
@@ -215,10 +217,6 @@ class Wormhole {
         });
         return uuid;
     }
-
-
-
-
 }
 
 export default BLEWormhole = new Wormhole();
