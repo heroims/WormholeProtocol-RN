@@ -6,11 +6,7 @@ const Platform = require('Platform');
 class Wormhole {
 
     constructor() {
-        this.GenerateDeviceID();
-
-        this.scanning=false;
-
-        
+        this.scanning=false;        
     }
 
     CreateNativeEventEmitter(centralEmitter,peripheralEmitter){
@@ -39,16 +35,14 @@ class Wormhole {
               this.ReceiveHandler(characteristic);    
             }
     
-        });
+          })
     }
 
     CreatServer(serviceUUID,characteristicUUIDs,name = ''){
-
         var deviceName = name;
         if(deviceName === ''){
             deviceName = this.deviceUUID;
         }
-
         BLETransferManager.SetPeripheralName(deviceName);
         BLETransferManager.AddPeripheralServer(serviceUUID);
   
@@ -90,6 +84,18 @@ class Wormhole {
     Start(receiveHandler){
         this.ReceiveHandler=receiveHandler;
         return BLETransferManager.StartTransfer();
+    }
+
+    StartCentral(){
+        return BLETransferManager.StartCentral();
+    }
+
+    StartPeripheral(){
+        return BLETransferManager.StartPeripheral();
+    }
+
+    CheckState(){
+        BLETransferManager.CheckState();
     }
 
     SendBuffer(deviceName,deviceID,serviceUUID,characteristicUUID,sendBuffer){

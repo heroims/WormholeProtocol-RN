@@ -76,6 +76,10 @@ class TransferManager {
         return BLECentral.start()
     }
 
+    CheckState(){
+        BLECentral.checkState();
+    }
+
     Scan(serviceUUIDs,seconds,allowDuplicates, scanningOptions = {}){
         return BLECentral.scan(serviceUUIDs,seconds,allowDuplicates,scanningOptions);
     }
