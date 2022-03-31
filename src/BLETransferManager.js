@@ -109,10 +109,11 @@ class TransferManager {
             this.RetrievePeripheralServices(peripheralID,[serviceUUID])
             .then((peripheralInfo)=>{
                 var tmpArr = peripheralInfo.characteristics;
+                var tmpCharIDs = characteristicUUIDs.concat();
 
-                var tmpCharIDs = characteristicUUIDs;
                 while(tmpCharIDs.length>0){
-                    var characteristicUUID = tmpCharIDs.pop();
+                    var characteristicUUID = tmpCharIDs.shift();
+
                     for (var element of tmpArr) {
 
                         if(
@@ -203,7 +204,7 @@ class TransferManager {
             }
 
             if(tmpDataBuffer[tmpDataBuffer.length-1]==EndFlag){
-              tmpDataArr.pop()
+              tmpDataArr.shift()
 
               this.tmpWaitArr[characteristic.uuid+tag]=this.tmpWaitArr[characteristic.uuid+tag].concat(tmpDataArr);
 
@@ -212,7 +213,7 @@ class TransferManager {
               delete this.tmpWaitArr[characteristic.uuid+tag];
             }
             else if(tmpDataBuffer[tmpDataBuffer.length-1]==PartFlag){
-              tmpDataArr.pop()
+              tmpDataArr.shift()
 
               this.tmpWaitArr[characteristic.uuid+tag]=this.tmpWaitArr[characteristic.uuid+tag].concat(tmpDataArr);
             }

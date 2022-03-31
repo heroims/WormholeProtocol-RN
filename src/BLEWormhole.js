@@ -147,7 +147,7 @@ class Wormhole {
         return new Promise((fulfill, reject)=>{
             BLETransferManager.ConnectPeripheral(deviceID)
             .then(()=>{
-                BLETransferManager.StartNotification(deviceID,serviceUUID,[characteristicUUIDs])
+                BLETransferManager.StartNotification(deviceID,serviceUUID,characteristicUUIDs)
                 .then((characteristic)=>{
                     fulfill(characteristic);
                 })
