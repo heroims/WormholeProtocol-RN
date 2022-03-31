@@ -121,9 +121,9 @@ class TransferManager {
                             (characteristicUUID.toUpperCase()==element.characteristic.toUpperCase())
                         ){
                             fulfill(element);
-                            console.log('startNotification');
+
                             BLECentral.startNotification(peripheralID,serviceUUID,characteristicUUID).then(res=>{
-                                console.log('startNotification sccuess');
+                                console.log('startNotification sccuess',element);
                             })
                             break;
                         }
@@ -148,13 +148,10 @@ class TransferManager {
     }
 
     SendToPeripheral(peripheralID,serviceUUID,characteristicUUID,buffer){
-        console.log('buffer:'+buffer);
         return BLECentral.write(peripheralID,serviceUUID,characteristicUUID,buffer)
     }
 
     SendToCentral(centralIDs,serviceUUID,characteristicUUID,buffer){
-        console.log('buffer:'+buffer);
-
         BLEPeripheral.sendNotificationToDevices(serviceUUID,characteristicUUID,buffer,centralIDs)
     }
 
