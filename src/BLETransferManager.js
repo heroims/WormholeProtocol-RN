@@ -112,7 +112,7 @@ class TransferManager {
                 var tmpCharIDs = characteristicUUIDs.concat();
 
                 while(tmpCharIDs.length>0){
-                    var characteristicUUID = tmpCharIDs.shift();
+                    var characteristicUUID = tmpCharIDs.pop();
 
                     for (var element of tmpArr) {
 
@@ -201,7 +201,7 @@ class TransferManager {
             }
 
             if(tmpDataBuffer[tmpDataBuffer.length-1]==EndFlag){
-              tmpDataArr.shift()
+              tmpDataArr.pop();
 
               this.tmpWaitArr[characteristic.uuid+tag]=this.tmpWaitArr[characteristic.uuid+tag].concat(tmpDataArr);
 
@@ -210,12 +210,12 @@ class TransferManager {
               delete this.tmpWaitArr[characteristic.uuid+tag];
             }
             else if(tmpDataBuffer[tmpDataBuffer.length-1]==PartFlag){
-              tmpDataArr.shift()
+              tmpDataArr.pop();
 
               this.tmpWaitArr[characteristic.uuid+tag]=this.tmpWaitArr[characteristic.uuid+tag].concat(tmpDataArr);
             }
             else{
-               cb(err,Buffer.from(tmpDataArr))
+               cb(err,Buffer.from(tmpDataArr));
             }
         }
     }

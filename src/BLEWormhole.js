@@ -18,8 +18,12 @@ class Wormhole {
 
         BLETransferManager.centralEmitter.addListener('BleManagerDidUpdateValueForCharacteristic', (data) => {
             var characteristic = {'uuid':data.characteristic,'value':data.value.concat(),'service':data.service,'device':data.peripheral}
-    
-            this.ReceiveHandler(characteristic);    
+
+            BLETransferManager.TransferReceive(null,characteristic,(err,buffers)=>{
+                characteristic.value=buffers;
+                console.log('Update',buffers);
+                this.ReceiveHandler(characteristic);
+            });    
         });
 
         BLETransferManager.peripheralEmitter.addListener('didReceiveWrite',([err,data])=>{
@@ -29,12 +33,14 @@ class Wormhole {
               this.ReceiveHandler(undefined); 
             }
             else{
-    
               var characteristic = {'uuid':data.uuid,'value':data.value.concat(),'service':data.service,'device':data.central}
-              this.ReceiveHandler(characteristic);    
+              
+              BLETransferManager.TransferReceive(null,characteristic,(err,buffers)=>{
+                characteristic.value=buffers;
+                this.ReceiveHandler(characteristic);
+              });  
             }
-    
-          })
+        });
     }
 
     CreatServer(serviceUUID,characteristicUUIDs,name = ''){
