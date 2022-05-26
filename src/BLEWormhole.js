@@ -16,12 +16,14 @@ class Wormhole {
             this.DiscoverDeviceHandler(tmpDevice)
         });
 
+        BLETransferManager.centralEmitter.addListener('BleManagerStopScan', ()=>{   
+            this.DiscoverDeviceStopHandler()
+        });
+
         BLETransferManager.centralEmitter.addListener('BleManagerDidUpdateValueForCharacteristic', (data) => {
             var characteristic = {'uuid':data.characteristic,'value':data.value.concat(),'service':data.service,'device':data.peripheral}
-
             BLETransferManager.TransferReceive(null,characteristic,(err,buffers)=>{
                 characteristic.value=buffers;
-                console.log('Update',buffers);
                 this.ReceiveHandler(characteristic);
             });    
         });
@@ -29,12 +31,11 @@ class Wormhole {
         BLETransferManager.peripheralEmitter.addListener('didReceiveWrite',([err,data])=>{
 
             if (err){
-              console.log(err);
+              console.error(err);
               this.ReceiveHandler(undefined); 
             }
             else{
               var characteristic = {'uuid':data.uuid,'value':data.value.concat(),'service':data.service,'device':data.central}
-              
               BLETransferManager.TransferReceive(null,characteristic,(err,buffers)=>{
                 characteristic.value=buffers;
                 this.ReceiveHandler(characteristic);
@@ -118,12 +119,15 @@ class Wormhole {
         });
     }
 
-    Scan(serviceUUIDs,seconds,discoverDeviceHandler){
+    Scan(serviceUUIDs,seconds,discoverDeviceHandler,discoverDeviceStopHandler){
         if(discoverDeviceHandler!=undefined){
             this.DiscoverDeviceHandler=discoverDeviceHandler;
         }
+        if(discoverDeviceStopHandler!=undefined){
+            this.DiscoverDeviceStopHandler=discoverDeviceStopHandler;
+        }
         return new Promise((fulfill, reject)=>{
-            BLETransferManager.Scan(serviceUUIDs,seconds,true)
+            BLETransferManager.Scan(serviceUUIDs,seconds,false)
             .then(res=>{
                 this.scanning = true;
                 fulfill(res);

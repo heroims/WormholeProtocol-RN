@@ -122,8 +122,12 @@ class TransferManager {
                         ){
                             fulfill(element);
 
-                            BLECentral.startNotification(peripheralID,serviceUUID,characteristicUUID).then(res=>{
+                            BLECentral.startNotification(peripheralID,serviceUUID,characteristicUUID)
+                            .then(res=>{
                                 console.log('startNotification sccuess',element);
+                            })
+                            .catch(err=>{
+                                console.log('startNotification fail',err);
                             })
                             break;
                         }
@@ -195,7 +199,6 @@ class TransferManager {
         else{
             var tmpDataArr=characteristic.value.concat();
             var tmpDataBuffer=Buffer.from(characteristic.value);
-
             if(this.tmpWaitArr[characteristic.uuid+tag]==undefined){
                this.tmpWaitArr[characteristic.uuid+tag]=[];
             }
