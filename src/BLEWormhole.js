@@ -29,7 +29,6 @@ class Wormhole {
         });
 
         BLETransferManager.peripheralEmitter.addListener('didReceiveWrite',([err,data])=>{
-
             if (err){
               console.error(err);
               this.ReceiveHandler(undefined); 
@@ -119,7 +118,7 @@ class Wormhole {
         });
     }
 
-    Scan(serviceUUIDs,seconds,discoverDeviceHandler,discoverDeviceStopHandler){
+    Scan(serviceUUIDs,seconds,allowDuplicates,discoverDeviceHandler,discoverDeviceStopHandler){
         if(discoverDeviceHandler!=undefined){
             this.DiscoverDeviceHandler=discoverDeviceHandler;
         }
@@ -127,7 +126,7 @@ class Wormhole {
             this.DiscoverDeviceStopHandler=discoverDeviceStopHandler;
         }
         return new Promise((fulfill, reject)=>{
-            BLETransferManager.Scan(serviceUUIDs,seconds,false)
+            BLETransferManager.Scan(serviceUUIDs,seconds,allowDuplicates)
             .then(res=>{
                 this.scanning = true;
                 fulfill(res);
