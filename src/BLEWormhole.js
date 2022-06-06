@@ -16,6 +16,10 @@ class Wormhole {
             this.DiscoverDeviceHandler(tmpDevice)
         });
 
+        BLETransferManager.centralEmitter.addListener('BleManagerDisconnectPeripheral', (device)=>{   
+            this.DisconnectHandler(device.peripheral)
+        });
+
         BLETransferManager.centralEmitter.addListener('BleManagerStopScan', ()=>{   
             this.DiscoverDeviceStopHandler()
         });
@@ -26,6 +30,10 @@ class Wormhole {
                 characteristic.value=buffers;
                 this.ReceiveHandler(characteristic);
             });    
+        });
+        
+        BLETransferManager.peripheralEmitter.addListener('unsubscribedCentral',(central)=>{
+            this.DisconnectHandler(central);
         });
 
         BLETransferManager.peripheralEmitter.addListener('didReceiveWrite',([err,data])=>{
