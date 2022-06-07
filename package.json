@@ -11,8 +11,6 @@
   "peerDependencies": {
     "@react-native-async-storage/async-storage": "^1.16.1",
     "buffer": "^6.0.3",
-    "react": "17.0.2",
-    "react-native": "0.66.3",
     "react-native-ble-manager": "^8.0.2",
     "react-native-ble-peripheral": "github:heroims/react-native-ble-peripheral",
     "react-native-permissions": "^3.3.1",
