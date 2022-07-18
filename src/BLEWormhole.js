@@ -12,7 +12,7 @@ class Wormhole {
     CreateNativeEventEmitter(centralEmitter,peripheralEmitter){
         BLETransferManager.CreateNativeEventEmitter(centralEmitter,peripheralEmitter);
         BLETransferManager.centralEmitter.addListener('BleManagerDiscoverPeripheral', (device)=>{   
-            var tmpDevice={name:device.name,serviceUUIDs:device.advertising.serviceUUIDs===undefined?device.advertising.serviceUUIDs:device.advertising.serviceUUIDs.concat(),deviceID:device.id,connected:false}
+            var tmpDevice={name:device.localName,serviceUUIDs:device.advertising.serviceUUIDs===undefined?device.advertising.serviceUUIDs:device.advertising.serviceUUIDs.concat(),deviceID:device.id,connected:false}
             this.DiscoverDeviceHandler(tmpDevice)
         });
 
