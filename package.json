@@ -12,7 +12,7 @@
     "@react-native-async-storage/async-storage": "^1.16.1",
     "buffer": "^6.0.3",
     "react-native-ble-manager": "^8.0.2",
-    "react-native-ble-peripheral": "git+ssh://git@github.com:heroims/react-native-ble-peripheral.git",
+    "@heroims/react-native-ble-peripheral": "2.0.3",
     "react-native-permissions": "^3.3.1",
     "react-native-storage": "^1.0.1"
   },
