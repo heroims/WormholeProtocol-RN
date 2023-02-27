@@ -24,6 +24,10 @@ class Wormhole {
             this.DisconnectHandler(device.peripheral)
         });
 
+        BLETransferManager.centralEmitter.addListener('BleManagerDidUpdateState', (res)=>{   
+            this.BluetoothStateHandler(res)
+        });
+
         BLETransferManager.centralEmitter.addListener('BleManagerStopScan', ()=>{   
             this.DiscoverDeviceStopHandler()
         });
