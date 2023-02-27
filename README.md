@@ -72,6 +72,17 @@ BLEWormhole.StartCentral()
     console.error(err);
 });
 ```
+#### StartAll
+```
+Start(receiveHandler)
+  .then(res => {
+     //Peripheral res.res1 
+     //Central res.res2
+  })
+  .catch(err => {
+    console.error(err);
+});
+```
 ### Connect
 ```javascript
 BLEWormhole.Connect(device.deviceID, bleServiceUUID, connectCharaUUIDs)
