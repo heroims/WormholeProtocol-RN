@@ -23,6 +23,10 @@ var peripheralEmitter = new NativeEventEmitter(BLEPeripheral);
 var centralEmitter = new NativeEventEmitter(NativeModules.BleManager);
 BLEWormhole.CreateNativeEventEmitter(centralEmitter, peripheralEmitter);
 ```
+### CreatServer
+```javascript
+BLEWormhole.CreatServer(bleServiceUUID, connectCharaUUIDs, name);
+```
 ### Event handler
 ```javascript
 BLEWormhole.DisconnectHandler = deviceID => {
@@ -59,6 +63,10 @@ BLEWormhole.CheckState();
 ```javascript
 BLEWormhole.Scan([bleServiceUUID], dicoveredSeconds, true);
 ```
+### StopScan
+```javascript
+BLEWormhole.StopScan()
+```
 ### Start
 ```javascript
 BLEWormhole.StartPeripheral()
@@ -73,7 +81,7 @@ BLEWormhole.StartCentral()
 });
 ```
 #### StartAll
-```
+```javascript
 Start(receiveHandler)
   .then(res => {
      //Peripheral res.res1 
@@ -81,7 +89,7 @@ Start(receiveHandler)
   })
   .catch(err => {
     console.error(err);
-});
+  });
 ```
 ### Connect
 ```javascript
@@ -92,6 +100,22 @@ BLEWormhole.Connect(device.deviceID, bleServiceUUID, connectCharaUUIDs)
   .catch(err => {
     console.error(err);
 });
+```
+### Disconnect
+```javascript
+BLEWormhole.Disconnect(device.deviceID)
+  .then(res => {})
+  .catch(err => {
+    console.error(err);
+  });
+```
+### StopNotification
+```javascript
+BLEWormhole.StopNotification(deviceID,serviceUUID,characteristicUUID)
+  .then(res => {})
+  .catch(err => {
+    console.error(err);
+  });
 ```
 ### Send
 ```javascript
