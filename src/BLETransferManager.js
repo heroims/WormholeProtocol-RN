@@ -1,6 +1,6 @@
 export {BLECentral as BleManager};
 import BLECentral from "react-native-ble-manager/BleManager";
-import BLEPeripheral from 'react-native-ble-peripheral';
+import BLEPeripheral from '@heroims/react-native-ble-peripheral';
 import {
     NativeEventEmitter,
     NativeModules,

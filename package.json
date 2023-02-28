@@ -1,6 +1,6 @@
 {
   "name": "react-native-ble-wormhole",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "React Native Bluetooth Low Energy Offline Communication Protocol",
   "main": "index.js",
   "scripts": {},
