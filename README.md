@@ -4,7 +4,7 @@ Cross platform offline communication protocol based on Bluetooth Low Energe
 ## Installation
 ```bash
 npm install react-native-ble-manager --save
-npm install @heroims/react-native-ble-peripheral --save
+npm install github:heroims/react-native-ble-peripheral --save
 npm install react-native-ble-wormhole --save
 npx pod-install
 ```
