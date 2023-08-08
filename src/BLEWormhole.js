@@ -1,6 +1,6 @@
 import BLEStorage from './BLEStore';
 import BLETransferManager from './BLETransferManager';
-import {request, PERMISSIONS} from 'react-native-permissions';
+import {check, checkMultiple, requestMultiple, request, PERMISSIONS} from 'react-native-permissions';
 const Platform = require('Platform');
 
 class Wormhole {
@@ -68,34 +68,35 @@ class Wormhole {
         BLETransferManager.AddPeripheralServer(serviceUUID);
   
         if (Platform.OS === 'android') {
-            request(PERMISSIONS.ANDROID.BLUETOOTH_SCAN).then((result) => {
-            // …
-            });
-            request(PERMISSIONS.ANDROID.BLUETOOTH_ADVERTISE).then((result) => {
-            // …
-            });
-            request(PERMISSIONS.ANDROID.BLUETOOTH_CONNECT).then((result) => {
-            // …
-            });
-            request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION).then((result) => {
-            // …
-            });
-            request(PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION).then((result) => {
-            // …
-            });
-        
-            for (const characteristicUUID of characteristicUUIDs) {
-                BLETransferManager.AddPeripheralCharacteristicToService(serviceUUID,characteristicUUID,1|16,2|8|16)
-            }
+            checkMultiple([PERMISSIONS.ANDROID.BLUETOOTH_SCAN,PERMISSIONS.ANDROID.BLUETOOTH_ADVERTISE,PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION])
+            .then(results=>{
+                if(results[PERMISSIONS.ANDROID.BLUETOOTH_SCAN]==='denied'||results[PERMISSIONS.ANDROID.BLUETOOTH_ADVERTISE]==='denied'||results[PERMISSIONS.ANDROID.BLUETOOTH_CONNECT]==='denied'||results[PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION]==='denied'||results[PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION]==='denied'){
 
+                }
+                else {
+                    requestMultiple([PERMISSIONS.ANDROID.BLUETOOTH_SCAN,PERMISSIONS.ANDROID.BLUETOOTH_ADVERTISE,PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION])
+                    .then(results=>{
+                        for (const characteristicUUID of characteristicUUIDs) {
+                            BLETransferManager.AddPeripheralCharacteristicToService(serviceUUID,characteristicUUID,1|16,2|8|16)
+                        }
+                    })
+                }
+            })
         }
         else if(Platform.OS === 'ios'){
-            request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE).then((result) => {
-            // …
-            });
-            for (const characteristicUUID of characteristicUUIDs) {
-                BLETransferManager.AddPeripheralCharacteristicToService(serviceUUID,characteristicUUID,0x01|0x02,0x02|0x08|0x10)
-            }
+            check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE)
+            .then(result => {
+                if(result==='denied'){
+
+                }
+                else{
+                    request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE).then((result) => {
+                        for (const characteristicUUID of characteristicUUIDs) {
+                            BLETransferManager.AddPeripheralCharacteristicToService(serviceUUID,characteristicUUID,0x01|0x02,0x02|0x08|0x10)
+                        }
+                    });
+                }
+            })
         }
         else{
         
