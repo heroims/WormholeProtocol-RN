@@ -1,6 +1,6 @@
 {
   "name": "react-native-ble-wormhole",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "React Native Bluetooth Low Energy Offline Communication Protocol",
   "main": "index.js",
   "scripts": {},
@@ -12,7 +12,7 @@
     "@react-native-async-storage/async-storage": "^1.16.1",
     "buffer": "^6.0.3",
     "react-native-ble-manager": "^8.0.2",
-    "@heroims/react-native-ble-peripheral": "2.0.3",
+    "@heroims/react-native-ble-peripheral": "^2.0.4",
     "react-native-storage": "^1.0.1"
   },
   "keywords": [
@@ -30,7 +30,4 @@
     "url": "https://github.com/heroims/WormholeProtocol-RN/issues"
   },
   "homepage": "https://github.com/heroims/WormholeProtocol-RN#readme",
-  "dependencies": {
-    "@heroims/react-native-ble-peripheral": "^2.0.3"
-  }
 }
